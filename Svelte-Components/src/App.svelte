@@ -1,30 +1,54 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import Counter from './lib/Counter.svelte'
+  import { setContext } from 'svelte'
+  import type { DispatchOptions } from 'svelte/internal';
+  import ComponentC from './components/ComponentC.svelte';
+  import Greet from './components/Greet.svelte'
+  import Inner from './components/Inner.svelte';
+  import Popup from './components/Popup.svelte';
+  import Outer from './components/Outer.svelte';
+  import Button from './components/Button.svelte';
+  const name = 'Fabian'
+  const channel = 'OneByteOfRam'
+  const obj = {
+    name: 'Barry',
+    heroName: 'Flash',
+  }
+  const userName = 'Tacomaker'
+  setContext('username-context', userName)
+
+  let showPopup = false
+
+  function closePopup(event: CustomEvent<String>) {
+    showPopup = false
+    console.log(event.detail)
+  }
+
+  function handleGreet(event: CustomEvent<String>) {
+    alert(event.detail)
+  }
 </script>
 
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer"> 
-      <img src="/vite.svg" class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer"> 
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
+  <Greet name='Bruce' heroName='Batman'/>
+  <Greet name='Clark' heroName='Superman'/>
+  <Greet name='Diana' heroName='Wonder Woman'/>
+  <Greet name={name} heroName={channel}/>
+  <Greet {name} heroName={channel}/>
+  <Greet {name}/>
+  <Greet name={obj.name} heroName={obj.heroName}/>
+  <Greet {...obj}/>
+  <ComponentC/>
+  
+  <button on:click={() => (showPopup = true)}>Show Popup</button>
+  {#if showPopup}
+    <Popup on:close={() => (showPopup = false)}/>
+    <Popup on:close={closePopup}/>
+  {/if}
+  
 
-  <div class="card">
-    <Counter />
-  </div>
+  <Outer on:greet={handleGreet}/>
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  <Button on:click={() => alert('Clicked')}>Click</Button> 
 </main>
 
 <style>
