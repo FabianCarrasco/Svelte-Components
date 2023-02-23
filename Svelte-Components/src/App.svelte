@@ -1,12 +1,13 @@
 <script lang="ts">
   import { setContext } from 'svelte'
-  import type { DispatchOptions } from 'svelte/internal';
+  import type { children, DispatchOptions } from 'svelte/internal';
   import ComponentC from './components/ComponentC.svelte';
   import Greet from './components/Greet.svelte'
   import Inner from './components/Inner.svelte';
   import Popup from './components/Popup.svelte';
   import Outer from './components/Outer.svelte';
   import Button from './components/Button.svelte';
+  import ChildStyles from './components/ChildStyles.svelte';
   const name = 'Fabian'
   const channel = 'OneByteOfRam'
   const obj = {
@@ -49,22 +50,22 @@
   <Outer on:greet={handleGreet}/>
 
   <Button on:click={() => alert('Clicked')}>Click</Button> 
+
+
+  <h4>App component text</h4>
+  <ChildStyles />
+  <h3>App component global style</h3>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  /*Result is same if applied to child component*/
+  :global(h3) {
+    color: blue;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+
+  h4 {
+    color: orange;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
+
+
 </style>

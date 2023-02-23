@@ -1,9 +1,28 @@
 <script lang="ts">
   import Card from "./components/Card.svelte";
   import CardA from "./components/CardA.svelte";
+  import NameList from "./components/NameList.svelte";
 </script>
 
 <main>
+  <NameList>
+    <h3 slot='hero' let:firstName let:lastName>
+      {firstName} {lastName}
+    </h3>
+  </NameList>
+  
+  <NameList>
+    <h3 slot="hero" let:firstName let:lastName>
+      {lastName}, {firstName}
+    </h3>
+  </NameList>
+  
+  <NameList>
+    <h3 slot="hero" let:firstName>
+      {firstName}
+    </h3>
+  </NameList>
+  
   <Card>Card content</Card>  
   <Card><h2>Card Content</h2></Card>
   <Card><img src="https://picsum.photos/200" alt=""></Card>
@@ -30,19 +49,5 @@
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
+  
 </style>
